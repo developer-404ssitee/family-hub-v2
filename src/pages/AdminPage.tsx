@@ -14,12 +14,14 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
 
-  if (profile?.role !== 'admin') return <Navigate to="/chat" replace />
+
 
   useEffect(() => {
     supabase.from('profiles').select('*').order('created_at', { ascending: true })
       .then(({ data }) => { if (data) setMembers(data); setLoading(false) })
   }, [])
+
+  if (profile?.role !== 'admin') return <Navigate to="/chat" replace />
 
   const deleteUser = async (userId: string) => {
     if (!confirm('Bu foydalanuvchini o\'chirmoqchimisiz?')) return
